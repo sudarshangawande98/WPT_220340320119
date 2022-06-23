@@ -1,0 +1,112 @@
+<html>
+<body>
+
+<!-- <form action="poc2" method="get">
+<Br/>whocares<input type="text" name="whocares"/>
+<input type="submit" value="get"/>
+</form>
+
+
+<form action="poc1" method="post">
+<Br/>whocares<input type="text" name="whocares"/>
+<input type="submit" value="post"/>
+</form>
+
+<button id="b2"> jquery works</button> -->
+<!-- ======================== -->
+<form action="poc2" method="get">
+	<Br/>Book id<input type="text" name="bookid"/>
+	<input type="submit" value="get"/>
+	</form>
+	
+	<form action="poc1" method="post">
+	<Br/>book name<input type="text" name="bookname"/>
+	<input type="submit" value="post"/>
+	</form>
+
+	<form action="poc1" method="post">
+		<Br/>price<input type="text" name="price"/>
+		<input type="submit" value="post"/>
+		</form>
+	
+	<button id="b2">add a book</button>
+
+</body>
+
+<script src="jquery-3.5.1.min.js"></script>
+<script>//our scrip will come here 
+
+$(document).ready(function()
+{
+console.log("no more sins");
+	$("#b2").click(function () 
+	{ 
+		//console.log("jquery works");
+		alert("jquery works")
+	});
+
+	$("#add").click(() => {
+		console.log("add event ");
+
+		const input1 = {bookid1: $("#bookid").val(), bookname1: $("#bookname").val(), price1: $("#price").val()};
+
+		let parameterstothefuncation = {
+			data: input1,
+			url: "http://localhost:8081/mock",
+			type: 'get',
+			dataType: "json",
+			success: (datagivenbyserver) => {
+				console.log("data given by server in success"+ datagivenbyserver.status)
+				if(datagivenbyserver.status === true) {
+					$("#message").text("add book details");
+					$("#bookid").val("");
+					$("#bookname").val("");
+					$("#add").prop('disabled', false);
+					$("#update").prop('disabled', true);
+				}
+				else{
+					$("#message").text("add book details not found");
+					$("#bookid").val("");
+					$("#bookname").val("");
+					$("#price").val("");
+					$("#add").prop('disabled', true);
+					$("#update").prop('disabled', true);
+				}
+			},
+			error: (errorgivenbyserver) => {console.log("failed to contact server" +errorgivenbyserver)}
+		};
+		$ajax(parameterstothefuncation);
+	});
+
+	$("#update").click(() => {
+		console.log("add event ");
+
+		const input2 = {bookid2: $("#bookid").val(), bookname2: $("#bookname").val(), price2: $("#price").val()};
+
+		let parameterstothefuncation = {
+			data: input2,
+			url: "http://localhost:8081/mock",
+			type: 'get',
+			dataType: "json",
+			success: (datagivenbyserver) => {
+				console.log("data given by server in success"+ datagivenbyserver.status)
+				if(datagivenbyserver.status === true) {
+					$("#message").text("update book details");
+					$("#bookid").val("");
+					$("#bookname").val("");
+					$("#add").prop('disabled', true);
+					$("#update").prop('disabled', true);
+				}
+				else{
+					$("#message").text("not update");
+				}
+			},
+			error: (errorgivenbyserver) => {console.log("failed to contact server" +errorgivenbyserver)}
+		};
+		$ajax(parameterstothefuncation);
+	});	
+});
+	
+</script>
+
+</html>
